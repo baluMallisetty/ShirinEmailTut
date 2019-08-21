@@ -72,8 +72,14 @@ public static void main(String [] args) {
       
       ////////////////////////////////new code fore Multip Attachment support//////////////
      String[] resource_path_list = new String[]{"C:\\Users\\balu\\Desktop\\email\\1.png","C:\\Users\\balu\\Desktop\\email\\2.png","C:\\Users\\balu\\Desktop\\email\\3.png"};
-     for (String each_path : resource_path_list) {
-    	 multipart.addBodyPart(stichBodypart(each_path));
+     
+     ArrayList<attachmentHolder> metaDataListofAttachemnts = new ArrayList<>();
+     metaDataListofAttachemnts.add(new attachmentHolder("C:\\Users\\balu\\Desktop\\email\\1.png", "image/png"));
+     metaDataListofAttachemnts.add(new attachmentHolder("C:\\Users\\balu\\Desktop\\email\\2.png", "image/png"));
+     metaDataListofAttachemnts.add(new attachmentHolder("C:\\Users\\balu\\Desktop\\email\\3.png", "image/png"));
+     
+     for (attachmentHolder each_holder : metaDataListofAttachemnts) {
+    	 multipart.addBodyPart(stichBodypart(each_holder));
      }
      ////////////////////////////////new code fore Multip Attachment support//////////////
      message.setContent(multipart);
@@ -86,6 +92,24 @@ public static void main(String [] args) {
       mex.printStackTrace();
    }   
 }
+
+public static BodyPart stichBodypart(attachmentHolder in_path) {
+	 BodyPart image_html_bodypart = new MimeBodyPart();         
+    //multipart.addBodyPart(image_html_bodypart );
+    DataSource fds = new FileDataSource(in_path.Path); // ADD ADDRESS
+    
+    try {
+    image_html_bodypart.setDataHandler(new DataHandler(fds));
+    image_html_bodypart.setHeader("Content-Type", in_path.ContentType+"; name="+UUID.randomUUID().toString()+".png");
+	 image_html_bodypart.setHeader("Content-ID",  UUID.randomUUID().toString());
+	 image_html_bodypart.setHeader("Content-Disposition", "inline");
+	} catch (MessagingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+    return image_html_bodypart;
+} 
+
 public static BodyPart stichBodypart(String in_path) {
 	 BodyPart image_html_bodypart = new MimeBodyPart();         
      //multipart.addBodyPart(image_html_bodypart );
