@@ -103,20 +103,4 @@ public static BodyPart stichBodypart(String in_path) {
      return image_html_bodypart;
 } 
 
-public static BodyPart stichBodypart(String[] in_paths) {
-	 BodyPart image_html_bodypart = new MimeBodyPart();
-	for(String path_of_each_resource : in_paths) {
-		 DataSource fds = new FileDataSource(path_of_each_resource); // ADD ADDRESS
-		 try {
-			    image_html_bodypart.setDataHandler(new DataHandler(fds));
-			    image_html_bodypart.setHeader("Content-Type", "image/png; name="+UUID.randomUUID().toString()+".png");
-				 image_html_bodypart.setHeader("Content-ID", UUID.randomUUID().toString());
-				 image_html_bodypart.setHeader("Content-Disposition", "inline");
-				} catch (MessagingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	} 
-    return image_html_bodypart;
-} 
 }
