@@ -10,36 +10,6 @@ import javax.activation.*;
 public class emailbasic {
 
 public static void main(String [] args) { 
-
-//Scanner myObj = new Scanner(System.in);
-//System.out.println("Enter to email ");
-//String too= myObj.nextLine();
-//System.out.println("Enter from email ");
-//String ffrom= myObj.nextLine();
-//System.out.println("Enter the address of data ");
-//String address_data= myObj.nextLine();
-////	  System.out.println("Enter the type of data ");............here doubt where to use data_type
-////	  String data_type= myObj.nextLine();
-//System.out.println("Enter header one");
-//String headerone= myObj.nextLine();
-//System.out.println("do you want more headers? say y or n");
-//String doubt= myObj.nextLine();
-//String cleared="y";
-//String moreheaders = null;
-// if (doubt.equals(cleared))  {
-//      
-//	System.out.println("Enter header");
-//	moreheaders= myObj.nextLine();     
-//      
-//     
-// }
-// else{
-//	System.out.println("proceeding further..."); 
-//	 
-// }
-
-
-
    // Recipient's email ID needs to be mentioned.
    String from = "balu.mallisetty@gmail.com";
 
@@ -53,7 +23,6 @@ public static void main(String [] args) {
    Properties props = System.getProperties();
 
    // Setup mail server
-   
    props.put("mail.smtp.host", host);
    props.put("mail.smtp.user", from);
    props.put("mail.smtp.password","dnbcsrijvslwywnj");
@@ -71,8 +40,7 @@ public static void main(String [] args) {
    try {
       // Create a default MimeMessage object.
       MimeMessage message = new MimeMessage(session);
-  
-
+      
       // Set From: header field of the header.
       message.setFrom(new InternetAddress(from));
 
@@ -85,8 +53,8 @@ public static void main(String [] args) {
       // Now set the actual message
      message.setText("This is actual message");
       
-//     String html_display = "<h1> hiee this is html..lol!! </h1> " ;
-//     message.setContent(html_display, "text/html");                     ...... why not displaying
+     String html_display = "<h1> hiee this is html..lol!! </h1> " ;
+     message.setContent(html_display, "text/html");               
       
     // STARTING MULTIPART
       
@@ -102,17 +70,12 @@ public static void main(String [] args) {
      multipart.addBodyPart(htmlbodypart1);
       
       
-      
-      
-      //HTML IMAGE
-      //String image_html="<img src=\"cid:image\">";   
-    
-     //multipart.addBodyPart(stichBodypart("C:\\Users\\balu\\Desktop\\email\\1.png"));
-     
+      ////////////////////////////////new code fore Multip Attachment support//////////////
      String[] resource_path_list = new String[]{"C:\\Users\\balu\\Desktop\\email\\1.png","C:\\Users\\balu\\Desktop\\email\\2.png","C:\\Users\\balu\\Desktop\\email\\3.png"};
      for (String each_path : resource_path_list) {
     	 multipart.addBodyPart(stichBodypart(each_path));
      }
+     ////////////////////////////////new code fore Multip Attachment support//////////////
      message.setContent(multipart);
       
       
